@@ -1,21 +1,22 @@
-from abs import ABC, abstractmethod
+from abc import ABC, abstractmethod
 
 class AbstractAgent(ABC):
 
     ID = 0
 
-    def __init__(self,value):
-        self.value = value
+    def __init__(self):
         super().__init__()
 
-    @abstractmethod
+    def setID(self, value):
+        self.ID = value
+
     def getID(self):
-        pass
+        return self.ID
 
     @abstractmethod
     def getNextMove(self, boardArray):
         pass
 
     def checkSpace(self, x, y, boardArray):
-        return (boardArray[x][y] == self.ID?) True : False
+        return True if (boardArray[x][y] == self.ID) else False
 

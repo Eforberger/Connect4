@@ -27,7 +27,9 @@ class Game:
 
     #board = [0]*5 [0]*5
     agent1 = AI()
+    agent1.setID(123)
     agent2 = Person()
+    agent2.setID(124)
 
 
     def __init__(self):
@@ -37,8 +39,8 @@ class Game:
         gameOver = False
 
         while not gameOver:
-            agent1.getNextMove()
-            agent2.getNextMove()
+            self.agent1.getNextMove()
+            self.agent2.getNextMove()
             self.checkWin()
 
     # <editor-fold desc="Description">
@@ -56,17 +58,17 @@ class Game:
 
     def print_board(self):
         for line in (self.board):
-            print "|",
+            print("|")
             for cell in line:
-                print "Z" if cell == agent1.getID() else "X" if cell == agent2.getID() else ".",
-            print "|"
+                print("Z" if cell == self.agent1.getID() else "X" if cell == self.agent2.getID() else ".")
+            print("|")
 
 
     def add_disc(self, column, player):
 
         # Validate column and player numbers
         if not column < self.COLUMNS:
-            print "Invalid column number! Try again."
+            print("Invalid column number! Try again.")
             return False
 
         # Swap the dimensions to make it easier to loop through
@@ -154,11 +156,11 @@ class Game:
     # Returns the length of sequence in the direction specified
     def follow_sequence(self, row, column, direction):
         if direction not in self.DIRECTIONS:
-            print "Invalid direction in follow_sequence"
+            print("Invalid direction in follow_sequence")
             return False
 
         if not (row < self.COLUMNS and column < self.ROWS):
-            print "Invalid row/column."
+            print("Invalid row/column.")
             return False
 
         player = self.board[row,column]
@@ -175,7 +177,7 @@ class Game:
     # Returns a dictionary with the values of the surrounding points
     def get_next_values(self, column, row):
         if not (column < self.COLUMNS and row < self.ROWS):
-            print "Invalid row/column."
+            print("Invalid row/column.")
             return False
 
         # Pad board with -1, so we don't get any index errors
@@ -186,7 +188,7 @@ class Game:
         # Get the surrounding cells
         return dict(zip(["nw", "n", "ne", "w", "x", "e", "sw", "s", "se"], (paddedBoard[column:column+3, row:row+3]).ravel()))
 
-game = Connect4()
+game = Game()
 game.add_disc(3, 1)
 #game.add_disc(3, 2)
 game.add_disc(3, 1)
