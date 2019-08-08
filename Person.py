@@ -1,4 +1,4 @@
-import AbstractAgent
+from AbstractAgent import AbstractAgent
 
 class Person(AbstractAgent):
 

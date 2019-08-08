@@ -5,7 +5,8 @@ class AbstractAgent(ABC):
     ID = 0
 
     def __init__(self):
-        super().__init__()
+        #super().__init__()
+        pass
 
     def setID(self, value):
         self.ID = value

@@ -1,4 +1,5 @@
-import AI, Person
+from AI import AI
+from Person import Person
 import operator, numpy
 
 # https://gist.github.com/ABIR-JT/4704533
@@ -58,13 +59,13 @@ class Game:
 
     def print_board(self):
         for line in (self.board):
-            print("|")
+            print("|", end="", flush=True)
             for cell in line:
-                print("Z" if cell == self.agent1.getID() else "X" if cell == self.agent2.getID() else ".")
+                print("Z" if cell == self.agent1.getID() else "X" if cell == self.agent2.getID() else ".", end="", flush=True)
             print("|")
 
 
-    def add_disc(self, column, player):
+    def add_disc(self, column, playerID):
 
         # Validate column and player numbers
         if not column < self.COLUMNS:
@@ -72,13 +73,13 @@ class Game:
             return False
 
         # Swap the dimensions to make it easier to loop through
-        sBoard = numpy.swapaxes(self.board, 0, 1)
+        sboard = numpy.swapaxes(self.board, 0, 1)
 
         # Put the piece in the first available spot in the specified column
-        for row, cell in enumerate(sBoard[column]):
+        for row, cell in enumerate(sboard[column]):
             if not cell:
-                sBoard[column, row] = player
-                self.board = numpy.swapaxes(sBoard,0,1)
+                sboard[column, row] = playerID
+                self.board = numpy.swapaxes(sboard,0,1)
                 return True
 
         # If we get here, then it should be because nothing can be placed here
@@ -189,12 +190,12 @@ class Game:
         return dict(zip(["nw", "n", "ne", "w", "x", "e", "sw", "s", "se"], (paddedBoard[column:column+3, row:row+3]).ravel()))
 
 game = Game()
-game.add_disc(3, 1)
-#game.add_disc(3, 2)
-game.add_disc(3, 1)
-game.add_disc(3, 1)
-game.add_disc(3, 1)
-game.add_disc(3, 2)
+game.add_disc(1, 123)
+game.add_disc(2, 124)
+game.add_disc(2, 123)
+game.add_disc(3, 124)
+game.add_disc(3, 223)
+game.add_disc(3, 224)
 game.print_board()
 
 
