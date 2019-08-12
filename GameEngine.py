@@ -6,6 +6,7 @@ import operator, numpy
 # TO DO: make it so that check sequence only checks for sequences at one spot, then change the looping to outside its call (so that cal can do the layer stuff)
 # import stuff
 # run code
+# https://gist.github.com/ABIR-JT/4704533
 
 class Game:
 
@@ -58,10 +59,11 @@ class Game:
 
 
     def print_board(self):
-        for line in (self.board):
+        # Flip the board upside down, so 0,0 is bottom left instead of top left, then print each row
+        for line in reversed(self.board):
             print("|", end="", flush=True)
             for cell in line:
-                print("Z" if cell == self.agent1.getID() else "X" if cell == self.agent2.getID() else ".", end="", flush=True)
+                print("Z" if cell == self.agent1.getID() else "X" if cell == self.agent2.getID() else cell, end="", flush=True)
             print("|")
 
 
@@ -74,12 +76,15 @@ class Game:
 
         # Swap the dimensions to make it easier to loop through
         sboard = numpy.swapaxes(self.board, 0, 1)
-
         # Put the piece in the first available spot in the specified column
         for row, cell in enumerate(sboard[column]):
+            print("row", row) # testing
+            #if not cell:
             if not cell:
                 sboard[column, row] = playerID
                 self.board = numpy.swapaxes(sboard,0,1)
+                self.print_board() # testing
+                print("----------") # testing
                 return True
 
         # If we get here, then it should be because nothing can be placed here
@@ -190,6 +195,7 @@ class Game:
         return dict(zip(["nw", "n", "ne", "w", "x", "e", "sw", "s", "se"], (paddedBoard[column:column+3, row:row+3]).ravel()))
 
 game = Game()
+game.board[0][0]=1 # testing
 game.add_disc(1, 123)
 game.add_disc(2, 124)
 game.add_disc(2, 123)
